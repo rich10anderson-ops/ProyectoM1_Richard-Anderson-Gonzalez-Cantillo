@@ -4,105 +4,95 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Riccie'Pallets</title>
-  <link rel="stylesheet" href="styles.css" />
-  
-</head>
-
-<style>  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html {
-      font-size: 100%;  /* Respeta preferencias del usuario */
-    }
-    
-    body {
-      font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', 
-             Consolas, 'Courier New', monospace;
-    }
-    .hero {
-
-      height: 50vh;
-      background: linear-gradient(135deg, #6b1aa499 0%, #764ba2 100%);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-    }
-    
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 4rem);  /* Responsive entre 2rem y 4rem */
-      margin-bottom: 1rem;
-        
-    }
-    
-    .hero p {
-      font-size: 1.25rem;
-      max-width: 65ch;  /* 60 caracteres de ancho */
-      text-align: center;
-    }
-    
-   .contenedor {
-  display: flex;
-justify-content: right;
-}
-</style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="toolbar">
-  <div class="toolbar__logo">
-    🎨 Ricci'ePallets
-  </div>
+    <div class="toolbar__logo logo-gradient">
+      🎨 Ricci'ePallets
+    </div>
 
-  <nav class="toolbar__nav">
-   <a href="#" class="toolbar__link">🎯 Explorar</a>
-<a href="#" class="toolbar__link">🎨 Generar</a>
-<a href="#" class="toolbar__link">📦 Paletas Guardadas</a>
-<a href="#" class="toolbar__link">✍️ Blog</a>
-<a href="#" class="toolbar__link">🌈 Populares</a>
+    <nav class="toolbar__nav">
+      <a href="#" class="toolbar__link">🎯 Explorar</a>
+      <a href="#" class="toolbar__link">🎨 Generar</a>
+      <a href="#" class="toolbar__link">📦 Paletas Guardadas</a>
+      <a href="#" class="toolbar__link">✍️ Blog</a>
+      <a href="#" class="toolbar__link">🌈 Populares</a>
+    </nav>
 
-  </nav>
+    <div class="toolbar__actions">
+      <input 
+        type="text" 
+        class="toolbar__search" 
+        placeholder="Buscar colores o paletas..."
+      />
 
-  <div class="toolbar__actions">
-    <input 
-      type="text" 
-      class="toolbar__search" 
-      placeholder="Buscar colores o paletas..."
-    />
+      <button id="themeToggle" class="toolbar__icon-btn">🌙</button>
 
-    <button id="themeToggle" class="toolbar__icon-btn">🌙</button>
-
-    <button class="toolbar__login">Iniciar sesión</button>
-    <button class="toolbar__register">Registrarse</button>
-  </div>
-</header>
-
-    <section class="hero">
-    <h1>Bienvenido a Ricci'ePallets 🎨 </h1>
-    <p>Aqui, encontraras el color que estas buscando para tus proyectos a gran escala</p>
-  </section>
-
-  <header>
-    <h1>🎨 Generador de Paletas de Colores </h1>
-    <p>Haz clic en un color para copiarlo</p>
+      <button class="toolbar__login">Iniciar sesión</button>
+      <button class="toolbar__register">Registrarse</button>
+    </div>
   </header>
 
-  <main>
+  <section class="hero">
+    <div class="hero__animated-bg"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">Bienvenido a Ricci'ePallets 🎨</h1>
+      <p class="hero__subtitle">Aquí encontrarás el color que estás buscando para tus proyectos a gran escala</p>
+      <div class="hero__color-pulse"></div>
+    </div>
+  </section>
+
+  <main class="main">
+    <section>
+      <h1 class="palette-section__title">🎨 Generador de Paletas de Colores</h1>
+      <p style="text-align: center; margin-bottom: 30px;">Haz clic en un color para copiarlo</p>
+    </section>
+
+    <!-- Botones de acciones principales -->
+    <div class="actions-bar">
+      <button id="generateBtn" class="palette-btn btn-glow">🔄 Generar nueva paleta</button>
+      <button id="saveFavBtn" class="palette-btn btn-secondary">❤️ Guardar como favorita</button>
+      <button id="exportBtn" class="palette-btn btn-secondary">💾 Exportar</button>
+      <button id="shareBtn" class="palette-btn btn-secondary">📤 Compartir</button>
+    </div>
+
+    <!-- Selector de categorías -->
+    <div class="categories-filter">
+      <span class="filter-label">Filtrar por categoría:</span>
+      <button class="category-btn active" data-category="all">Todas</button>
+      <button class="category-btn" data-category="pastel">Pastel</button>
+      <button class="category-btn" data-category="vibrante">Vibrante</button>
+      <button class="category-btn" data-category="minimalista">Minimalista</button>
+      <button class="category-btn" data-category="tendencias">Tendencias</button>
+    </div>
+
     <div id="palette" class="palette-container"></div>
 
-    <button id="generateBtn">🔄 Generar nueva paleta</button>
-  </main>
+    <!-- Panel de Favoritas -->
+    <section id="favoritesSection" class="favorites-section hidden">
+      <h2 class="section-subtitle">❤️ Paletas Favoritas</h2>
+      <div id="favoritesList" class="favorites-container">
+        <p class="empty-message">Aún no tienes paletas favoritas. ¡Guarda una ahora!</p>
+      </div>
+    </section>
 
-</head>
-<script src="script.js"></script>
+    <!-- Panel de Historial -->
+    <section id="historySection" class="history-section hidden">
+      <h2 class="section-subtitle">📜 Historial de Paletas</h2>
+      <div class="history-controls">
+        <button id="clearHistoryBtn" class="btn-small">🗑️ Limpiar historial</button>
+      </div>
+      <div id="historyList" class="history-container">
+        <p class="empty-message">No hay historial aún</p>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <p>Creado por Richard Gonzalez - Software Developer</p>
   </footer>
 
+  <script src="js/palette-manager.js"></script>
 </body>
 </html>
