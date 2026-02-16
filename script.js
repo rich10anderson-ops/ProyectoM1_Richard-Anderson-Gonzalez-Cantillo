@@ -1,4 +1,4 @@
-const paletteContainer = document.getElementById("palette");
+const paletteContainer = document.querySelector("palette");
 const generateBtn = document.getElementById("generateBtn");
 
 function randomColor() {
