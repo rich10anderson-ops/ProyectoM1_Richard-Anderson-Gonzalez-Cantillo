@@ -63,7 +63,6 @@ Posibles mejoras:
 
 ---
 
-## 🏗️ Arquitectura Técnica
 
 ### **Stack Tecnológico**
 
