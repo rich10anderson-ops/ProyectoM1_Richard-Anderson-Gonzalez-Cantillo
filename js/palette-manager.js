@@ -21,6 +21,7 @@ const categoryBtns = document.querySelectorAll(".category-btn");
 let currentPalette = [];
 let selectedCategory = "all";
 let darkMode = true;
+let paletteSize = 6;
 
 // Estilos de categorías de paletas
 const paletteCategories = {
@@ -51,13 +52,13 @@ function randomColor() {
 }
 
 /**
- * Genera una nueva paleta de 6 colores
+ * Genera una nueva paleta con el tamaño seleccionado
  */
 function generatePalette() {
   currentPalette = [];
   paletteContainer.innerHTML = "";
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < paletteSize; i++) {
     const color = randomColor();
     currentPalette.push(color);
     createColorCard(color, i);
@@ -468,6 +469,16 @@ clearHistoryBtn.addEventListener("click", clearHistory);
 
 categoryBtns.forEach(btn => {
   btn.addEventListener("click", (e) => filterByCategory(e.target.dataset.category));
+});
+
+// Event listeners para tamaño de paleta
+document.querySelectorAll(".size-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+    e.target.classList.add("active");
+    paletteSize = parseInt(e.target.dataset.size);
+    generatePalette();
+  });
 });
 
 // Inicialización
