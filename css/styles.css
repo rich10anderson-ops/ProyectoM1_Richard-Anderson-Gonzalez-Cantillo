@@ -20,7 +20,7 @@ body {
 /* ===== seccion del hero ===== */
 .hero {
   position: relative;
-  width: 100%;
+  width: 105%;
   height: 100vh;
   background-image: url("../assets/images/hero-palette.jpg");
   background-size: cover;
@@ -37,7 +37,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 105%;
   height: 100%;
   background: linear-gradient(
     135deg,
@@ -148,7 +148,7 @@ header {
 }
 
 .color-box {
-  width: 120px;
+  width: 100px;
   height: 120px;
 border-radius: 0px;
   display: flex;
@@ -192,7 +192,7 @@ footer {
 
 /* ===== MAIN LAYOUT ===== */
 .main {
-  padding: 100px 10%;
+  padding: 100px 150px;
   background: linear-gradient(-45deg, #cdea66, #2ae93d, #5d00ff, #ff6b6b);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
@@ -379,7 +379,7 @@ footer {
   color: #333;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
   transition: all 0.25s ease;
   position: relative;
 }
@@ -638,14 +638,14 @@ footer {
   text-align: center;
   font-size: 1.8rem;
   color: white;
-  margin: 50px 0 30px;
+  margin: 50px 0 10px;
   animation: titleSlideIn 0.8s ease forwards;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== SECCIÓN DE FAVORITAS ===== */
 .favorites-section {
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 20px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 20px;
@@ -706,8 +706,8 @@ footer {
 .category-tag {
   display: inline-block;
   background: rgba(255, 206, 0, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 10px 5px;
+  border-radius: 10px;
   font-size: 0.75rem;
   font-weight: bold;
   color: #ffce00;
@@ -721,26 +721,26 @@ footer {
 
 /* ===== SECCIÓN DE HISTORIAL ===== */
 .history-section {
-  margin-top: 70px;
-  padding: 20px;
+  margin-top: 50px;
+  padding: 5px;
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
+  border-radius: 15px;
   backdrop-filter: blur(10px);
 }
 
 .history-controls {
-  display: flex;
+  display:flex;
   justify-content: center;
-  margin-bottom: 20px;
-  gap: 10px;
+  margin-bottom: 50px;
+  gap: 20px;
 }
 
 .btn-small {
   background: rgba(255, 100, 100, 0.3);
   border: 2px solid rgba(255, 100, 100, 0.5);
   color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 8px 5px;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -748,24 +748,24 @@ footer {
 
 .btn-small:hover {
   background: rgba(255, 100, 100, 0.5);
-  box-shadow: 0 0 15px rgba(255, 100, 100, 0.3);
+  box-shadow: 0 0 8px rgba(255, 100, 100, 0.3);
 }
 
 .history-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
+  display:contents;
+  grid-template-columns: repeat(auto-fill, minmax(100px, -1fr));
+  gap: 5px;
 }
 
 .history-tile {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 10px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   transition: all 0.3s ease;
   animation: fadeInUp 0.5s ease forwards;
 }
@@ -778,7 +778,7 @@ footer {
 
 .history-preview {
   display: flex;
-  gap: 3px;
+  gap: 5px;
 }
 
 /* ===== BOTONES DE ICONOS ===== */
@@ -788,7 +788,7 @@ footer {
   font-size: 1.2rem;
   cursor: pointer;
   transition: transform 0.2s ease;
-  padding: 8px;
+  padding: 5px;
 }
 
 .btn-icon:hover {
@@ -832,7 +832,7 @@ footer {
 .share-btn {
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 15px;
   margin: 10px 0;
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.3);
