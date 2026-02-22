@@ -30,6 +30,21 @@
         <span class="btn-icon">📤</span>
         <span class="btn-label">Compartir</span>
       </button>
+      <div class="toolbar__format">
+        <span class="btn-icon">🎨</span>
+        <select id="historyFormatSelect" class="toolbar__format-select">
+          <option value="hsl">HSL</option>
+          <option value="rgba">RGBA</option>
+        </select>
+      </div>
+      <button id="clearHistoryNavBtn" class="toolbar__action-btn" title="Historial">
+        <span class="btn-icon">🗑️</span>
+        <span class="btn-label">Historial</span>
+      </button>
+      <button id="refreshHistoryNavBtn" class="toolbar__action-btn toolbar__refresh-btn" title="Refrescar historial">
+        <span class="btn-icon">🔁</span>
+        <span class="btn-label">Refrescar</span>
+      </button>
     </nav>
 
     <div class="toolbar__actions">
@@ -49,7 +64,7 @@
   <main class="main">
     <section>
       <h1 class="palette-section__title palette-section__title--neon">🎨 Generador de Paletas de Colores</h1>
-      <p style="text-align: center; margin-bottom: 30px;">Haz clic en un color para copiarlo</p>
+      <p style="text-align: center; margin-bottom: 30px;">Bien pueda: Escoja el tamaño de paleta deseado o haga click en un color para copiarlo en diferentes formatos, aquí la decisión es tuya!</p>
     </section>
 
     <!-- Selector de tamaño de paleta -->
@@ -83,13 +98,15 @@
     <!-- Panel de Historial -->
     <section id="historySection" class="history-section hidden">
       <h2 class="section-subtitle">📜 Historial de Paletas</h2>
-      <div class="history-controls">
-        <button id="clearHistoryBtn" class="btn-small">🗑️ Limpiar historial</button>
-      </div>
+        <div class="history-controls">
+          <!-- removed nav buttons previously here; use navbar controls -->
+        </div>
+      <!-- formato moved to navbar -->
+
       <div id="historyList" class="history-container">
         <p class="empty-message">No hay historial aún</p>
       </div>
-    </section>
+    </section>  
   </main>
 
   <footer>
