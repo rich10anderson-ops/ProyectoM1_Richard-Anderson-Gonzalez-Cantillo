@@ -60,9 +60,9 @@ header {
 }
 
 .color-box {
-  width: 120px;
-  height: 120px;
-border-radius: 90px;
+  width: 200px;
+  height: 200px;
+border-radius: 190px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -102,7 +102,7 @@ footer {
 
 /* ===== MAIN LAYOUT ===== */
 .main {
-  padding: 80px 5%;
+  padding: 200px 5%;
   background: linear-gradient(-45deg, #667eea, #764ba2, #ffce00, #ff6b6b);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
@@ -129,35 +129,35 @@ footer {
 .palette-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  gap: 12px;
   margin-bottom: 40px;
 }
 
 /* Color Card */
 .color-card {
   height: 180px;
-  border-radius: 18px;
+  border-radius: 15px;
   display: flex;
   align-items: flex-end;
-  padding: 12px;
+  padding: 10px;
   font-weight: bold;
-  color: white;
+  color: rgb(245, 240, 240);
   cursor: pointer;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+  box-shadow: 0 120px 80px rgba(0,0,0,0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   animation: cardPop 0.6s ease forwards;
 }
 
 .color-card:hover {
   transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
 }
 
 /* Botón */
 .palette-btn {
   display: block;
   margin: auto;
-  padding: 16px 45px;
+  padding: 250px 50px;
   font-size: 1.1rem;
   border: none;
   border-radius: 999px;
@@ -190,7 +190,7 @@ footer {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 70px;
+  height: 80px;
   background: rgba(20, 20, 40, 0.75);
   backdrop-filter: blur(12px);
   display: flex;
@@ -270,14 +270,14 @@ footer {
 
 /* Register CTA */
 .toolbar__register {
-  background: #ffce00;
+  background: #edeaea;
   border: none;
-  color: #333;
+  color: #e1d7d7;
   padding: 8px 20px;
   border-radius: 999px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 5px 20px rgba(255,206,0,0.5);
+  box-shadow: 0 5px 20px rgb(246, 244, 244);
   transition: 0.2s;
 }
 
