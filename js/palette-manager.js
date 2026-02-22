@@ -14,7 +14,7 @@ const favoritesSection = document.getElementById("favoritesSection");
 const favoritesList = document.getElementById("favoritesList");
 const historySection = document.getElementById("historySection");
 const historyList = document.getElementById("historyList");
-const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+const clearHistoryBtn = document.getElementById("clearHistoryNavBtn") || document.getElementById("clearHistoryBtn");
 const categoryBtns = document.querySelectorAll(".category-btn");
 
 // Estado global
@@ -63,7 +63,7 @@ function generatePalette() {
     currentPalette.push(color);
     createColorCard(color, i);
   }
-
+ alert(`✅ Paleta lista con ${currentPalette.length} colores`);
   // Guardar en historial
   savePaletteToHistory(currentPalette);
   updateUI();
@@ -82,18 +82,25 @@ function createColorCard(color, index) {
   const cardContent = document.createElement("div");
   cardContent.className = "color-card__content";
   
+  // Guardar hex original para re-render y acciones
+  card.dataset.hex = color;
+  
   const colorText = document.createElement("span");
   colorText.className = "color-text";
-  colorText.textContent = color;
+  // Mostrar el valor según el selector de formato (HSL / RGBA)
+  colorText.textContent = formatColorForDisplay(color);
   
   cardContent.appendChild(colorText);
   card.appendChild(cardContent);
 
   // Evento: copiar color al portapapeles
   card.addEventListener("click", () => {
-    navigator.clipboard.writeText(color);
+    const formatted = formatColorForDisplay(card.dataset.hex);
+    navigator.clipboard.writeText(formatted);
+    const previous = colorText.textContent;
     colorText.textContent = "✔ Copiado";
-    setTimeout(() => colorText.textContent = color, 800);
+    setTimeout(() => colorText.textContent = previous, 800);
+    alert(`✅ Color copiado: ${formatted}`);
   });
 
   paletteContainer.appendChild(card);
@@ -209,10 +216,97 @@ function savePaletteToHistory(palette) {
 }
 
 /**
+ * Convierte un color hex a HSL
+ */
+function hexToHsl(hex) {
+  const bigint = parseInt(hex.replace('#',''), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  const rNorm = r / 255, gNorm = g / 255, bNorm = b / 255;
+  const max = Math.max(rNorm, gNorm, bNorm), min = Math.min(rNorm, gNorm, bNorm);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+      case gNorm: h = (bNorm - rNorm) / d + 2; break;
+      case bNorm: h = (rNorm - gNorm) / d + 4; break;
+    }
+    h = Math.round(h * 60);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
+  }
+
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+/**
+ * Convierte hex a rgba (alpha opcional)
+ */
+function hexToRgba(hex, alpha = 1) {
+  const bigint = parseInt(hex.replace('#',''), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+/**
+ * Genera un thumbnail SVG en forma de rombo a partir de una lista de colores
+ * Devuelve markup SVG como string
+ */
+function renderHistoryThumbnail(colors, format = 'hsl') {
+  const size = 72;
+  const slice = Math.max(1, Math.floor(size / colors.length));
+  const center = size / 2;
+  let rects = '';
+
+  colors.forEach((c, i) => {
+    const x = i * slice;
+    const value = format === 'rgba' ? hexToRgba(c, 1) : hexToHsl(c);
+    rects += `<rect x="${x}" y="0" width="${slice + 1}" height="${size}" fill="${c}"><title>${value}</title></rect>`;
+  });
+
+  const svg = `
+<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Miniatura de paleta">
+  <g transform="rotate(45 ${center} ${center})">
+    ${rects}
+  </g>
+</svg>`;
+
+  return svg;
+}
+
+/** Devuelve el valor formateado segun el selector global */
+function formatColorForDisplay(hex) {
+  const selector = document.getElementById('historyFormatSelect');
+  const format = selector ? selector.value : 'hsl';
+  return format === 'rgba' ? hexToRgba(hex, 1) : hexToHsl(hex);
+}
+
+/** Re-renderiza las tarjetas actuales del generador con el formato seleccionado */
+function updatePaletteCardsFormat() {
+  const cards = document.querySelectorAll('#palette .color-card');
+  cards.forEach(card => {
+    const hex = card.dataset.hex;
+    if (!hex) return;
+    const txt = card.querySelector('.color-text');
+    if (txt) txt.textContent = formatColorForDisplay(hex);
+  });
+}
+
+/**
  * Muestra el historial de paletas
  */
 function updateHistoryDisplay() {
   const history = JSON.parse(localStorage.getItem("ricciePalettesHistory")) || [];
+  const formatSelect = document.getElementById('historyFormatSelect');
+  const format = formatSelect ? formatSelect.value : 'hsl';
 
   if (history.length === 0) {
     historyList.innerHTML = '<p class="empty-message">No hay historial aún</p>';
@@ -221,15 +315,74 @@ function updateHistoryDisplay() {
   }
 
   historySection.classList.remove("hidden");
-  historyList.innerHTML = history.reverse().map((item, index) => `
+  // Mostrar más reciente primero
+  const items = history.slice().reverse().slice(0, 3); // mostrar solo las 3 más recientes
+
+  historyList.innerHTML = items.map((item, index) => {
+    const svg = renderHistoryThumbnail(item.colors, format);
+    return `
     <div class="history-tile">
-      <div class="history-preview">
-        ${item.colors.map(color => `<div class="color-dot" style="background: ${color};" title="${color}"></div>`).join("")}
+      <div class="history-thumb">${svg}</div>
+      <div class="history-overlay">
+        <button class="btn-small" onclick="downloadHistoryPaletteSVG('${item.colors.join(',')}', 'hsl')">Descargar SVG (HSL)</button>
+        <button class="btn-small" onclick="downloadHistoryPaletteSVG('${item.colors.join(',')}', 'rgba')">Descargar SVG (RGBA)</button>
+        <button class="btn-small" onclick="copyHistoryColors('${item.colors.join(',')}', '${format}')">Copiar (${format.toUpperCase()})</button>
+        <button class="btn-small" onclick="loadHistoryPalette('${item.colors.join(',')}')">Cargar</button>
+        <button class="btn-small" onclick="saveColorsAsFavorite('${item.colors.join(',')}')">❤️ Favorito</button>
       </div>
       <small>${item.date}</small>
       <button class="btn-icon" onclick="loadHistoryPalette('${item.colors.join(',')}')" title="Cargar">📂</button>
     </div>
-  `).join("");
+  `;
+  }).join("");
+}
+
+/**
+ * Descargar una paleta del historial como SVG usando HSL o RGBA
+ * colorsString: '#aa00ff,#00ff88,...'
+ */
+function downloadHistoryPaletteSVG(colorsString, format = 'hsl') {
+  const colors = colorsString.split(',');
+  const width = 100 * colors.length;
+  const height = 220;
+
+  let svg = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  svg += `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">\n`;
+  svg += `<rect width="100%" height="100%" fill="#ffffff"/>\n`;
+
+  colors.forEach((c, i) => {
+    const x = i * 100;
+    const fill = format === 'rgba' ? hexToRgba(c, 1) : hexToHsl(c);
+    svg += `<rect x="${x}" y="0" width="100" height="160" fill="${fill}"/>\n`;
+    svg += `<text x="${x + 50}" y="190" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">${fill}</text>\n`;
+  });
+
+  svg += `</svg>`;
+
+  const filename = `paleta-historial-${Date.now()}.svg`;
+  downloadFile(svg, filename, 'image/svg+xml');
+}
+
+/** Copia los colores formateados al portapapeles */
+function copyHistoryColors(colorsString, format = 'hsl') {
+  const colors = colorsString.split(',');
+  const mapped = colors.map(c => format === 'rgba' ? hexToRgba(c,1) : hexToHsl(c));
+  const text = mapped.join(', ');
+  navigator.clipboard.writeText(text);
+  alert('✅ Colores copiados: ' + text);
+}
+
+/** Guarda una paleta (pasada como string) en favoritos */
+function saveColorsAsFavorite(colorsString) {
+  const colors = colorsString.split(',');
+  let favorites = JSON.parse(localStorage.getItem("ricciePalettesFavorites")) || [];
+  const exists = favorites.some(p => p.colors.join(',') === colors.join(','));
+  if (exists) { alert('Esta paleta ya está en favoritas'); return; }
+  const favorite = { id: Date.now(), colors: colors, savedDate: new Date().toLocaleString('es-ES'), category: 'personal' };
+  favorites.push(favorite);
+  localStorage.setItem('ricciePalettesFavorites', JSON.stringify(favorites));
+  updateFavoritesDisplay();
+  alert('✅ Paleta guardada en favoritas');
 }
 
 /**
@@ -403,7 +556,7 @@ function sharePalette() {
 function copyShareLink() {
   const link = `Colores: ${currentPalette.join(", ")}`;
   navigator.clipboard.writeText(link);
-  alert("✅ Colores copiados al portapapeles");
+  alert("👌 Colores copiados al portapapeles");
 }
 
 /**
@@ -465,7 +618,61 @@ themeToggle.addEventListener("click", toggleTheme);
 saveFavBtn.addEventListener("click", savePaletteToFavorites);
 exportBtn.addEventListener("click", showExportMenu);
 shareBtn.addEventListener("click", sharePalette);
-clearHistoryBtn.addEventListener("click", clearHistory);
+if (clearHistoryBtn) {
+  clearHistoryBtn.addEventListener('click', clearHistory);
+  // hover preview: mostrar la última paleta generada en pequeño
+  clearHistoryBtn.addEventListener('mouseenter', (e) => {
+    const btn = e.currentTarget;
+    // evitar duplicados
+    if (btn.querySelector('.nav-history-preview')) return;
+    let colors = currentPalette && currentPalette.length ? currentPalette : (JSON.parse(localStorage.getItem('ricciePalettesHistory') || '[]').slice(-1)[0]?.colors || []);
+    const preview = document.createElement('div');
+    preview.className = 'nav-history-preview';
+    colors.forEach(c => {
+      const sw = document.createElement('div');
+      sw.className = 'nav-history-swatch';
+      sw.style.background = c;
+      preview.appendChild(sw);
+    });
+    btn.appendChild(preview);
+  });
+  clearHistoryBtn.addEventListener('mouseleave', (e) => {
+    const btn = e.currentTarget;
+    const p = btn.querySelector('.nav-history-preview');
+    if (p) p.remove();
+  });
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('clearHistoryNavBtn') || document.getElementById('clearHistoryBtn');
+    if (btn) btn.addEventListener('click', clearHistory);
+  });
+}
+
+// Botón para refrescar el render del historial manualmente (navbar)
+const refreshHistoryNavBtn = document.getElementById('refreshHistoryNavBtn') || document.getElementById('refreshHistoryBtn');
+if (refreshHistoryNavBtn) {
+  refreshHistoryNavBtn.addEventListener('click', () => {
+    updateHistoryDisplay();
+    const section = document.getElementById('historySection');
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.getElementById('refreshHistoryNavBtn') || document.getElementById('refreshHistoryBtn');
+    if (b) b.addEventListener('click', () => { updateHistoryDisplay(); const s = document.getElementById('historySection'); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+  });
+}
+
+// Listener para selector de formato en historial (HSL / RGBA)
+const historyFormatSelect = document.getElementById('historyFormatSelect');
+if (historyFormatSelect) {
+  historyFormatSelect.addEventListener('change', () => { updateHistoryDisplay(); updatePaletteCardsFormat(); });
+} else {
+  document.addEventListener('DOMContentLoaded', () => {
+    const s = document.getElementById('historyFormatSelect');
+    if (s) s.addEventListener('change', () => { updateHistoryDisplay(); updatePaletteCardsFormat(); });
+  });
+}
 
 categoryBtns.forEach(btn => {
   btn.addEventListener("click", (e) => filterByCategory(e.target.dataset.category));
