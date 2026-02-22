@@ -41,7 +41,6 @@ function generatePalette() {
 
 // Evento: generar paleta al hacer clic en el botón
 generateBtn.addEventListener("click", generatePalette);
-
 // Generar paleta inicial al cargar la página
 generatePalette();
 
