@@ -14,6 +14,9 @@ function generatePalette() {
     card.className = "color-card";
     card.style.background = color;
     card.textContent = color;
+    card.style.animationDelay = `${i
+      
+    }s`;
 
     // Delay animación escalonada (stagger effect)
     card.style.animationDelay = `${i * 0.1}s`;
