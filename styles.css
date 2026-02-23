@@ -5,6 +5,10 @@
   box-sizing: border-box;
   font-family: "Segoe UI", sans-serif;
 }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
   background: linear-gradient(135deg, #667eea, #764ba2);
@@ -16,6 +20,7 @@ body {
   align-items:center;
   padding: 10px;
   grid-template-columns: 200px 200px 200px;
+ 
 }
 
 /* ===== seccion del hero ===== */
@@ -135,7 +140,7 @@ footer {
 
 /* Color Card */
 .color-card {
-  height: 150px;
+  height: 170px;
   border-radius: 15px;
   display: flex;
   align-items: flex-end;
@@ -143,14 +148,14 @@ footer {
   font-weight: bold;
   color: rgb(245, 240, 240);
   cursor: pointer;
-  box-shadow: 0 120px 80px rgba(0,0,0,0.35);
+ box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   animation: cardPop 0.6s ease forwards;
 }
 
 .color-card:hover {
   transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 15px rgba(0,0,0,0.5);
 }
 
 /* Botón */
