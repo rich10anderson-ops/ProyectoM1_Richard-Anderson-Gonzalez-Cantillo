@@ -6,7 +6,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #667eea, #764ba2 #071369);
   font-family: 'Roboto', sans-serif;
   color: white;
   min-height: 150vh;
@@ -94,8 +94,8 @@ body {
 
 /* Elemento decorativo pulsante en el hero */
 .hero__color-pulse {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 400px;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #ffce00, #764ba2);
   position: absolute;
@@ -139,7 +139,7 @@ header {
 @keyframes containerFadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -192,8 +192,8 @@ footer {
 
 /* ===== MAIN LAYOUT ===== */
 .main {
-  padding: 100px 150px;
-  background: linear-gradient(-45deg, #cdea66, #2ae93d, #5d00ff, #ff6b6b);
+  padding: 100px 10%;
+  background: linear-gradient(-145deg, #cdea66, #2ae93d, #8f64da, #ff6b6b);
   background-size: 400% 400%;
   animation: gradientFlow 15s ease infinite;
   min-height: 100vh;
@@ -201,7 +201,7 @@ footer {
 
 /* Barra de acciones */
 .actions-bar {
-  display: none;
+  display:none;
 }
 
 /* Filtro de categorías */
@@ -229,7 +229,7 @@ footer {
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .category-btn:hover {
@@ -317,8 +317,8 @@ footer {
 
 /* Color Card */
 .color-card {
-  height: 250px;
-  border-radius: 90px;
+  height: 230px;
+  border-radius: 80px;
   display: flex;
   align-items: flex-end;
   padding: 12px;
@@ -363,7 +363,7 @@ footer {
 
 .color-card:hover {
   transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.5), 
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5), 
               0 0 20px rgba(102, 126, 234, 0.4);
 }
 
@@ -916,7 +916,7 @@ footer {
   --logo-gradient: linear-gradient(90deg, #667eea, #764ba2, #ffce00, #667eea);
 }
 
-/* Logo (ya existía) */
+/* Aplica gradiente animado al logo */
 .logo-gradient {
   background: var(--logo-gradient);
   background-size: 300% 100%;
@@ -926,7 +926,7 @@ footer {
   animation: logoColorShift 3s ease infinite;
 }
 
-/* Aplicar el mismo tratamiento a etiquetas de la navbar */
+/* Aplica el mismo tratamiento a etiquetas de la navbar */
 .toolbar__nav .toolbar__action-btn,
 .toolbar__nav .toolbar__link,
 .toolbar__nav .btn-label {
