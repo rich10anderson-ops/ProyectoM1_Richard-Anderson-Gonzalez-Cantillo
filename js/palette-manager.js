@@ -693,3 +693,8 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTheme();
   generatePalette();
 });
+
+
+
+
+
