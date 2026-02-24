@@ -70,8 +70,8 @@ index.html
 # 2. Presiona 🔄 Generar
 # 3. Haz clic en un color para copiar
 # 4. Úsalo en tu proyecto ✅
+# 5. La barra estatica te permite acceder a funcionalidades sin tener que desplazarte por la pantalla.
 ```
-
 ### **Por profesión:**
 
 | Rol | Flujo |
