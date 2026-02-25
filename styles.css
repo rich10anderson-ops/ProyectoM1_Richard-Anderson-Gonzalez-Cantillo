@@ -28,7 +28,6 @@ body {
   position: relative;
   width: 200%;
   height: 200vh;
-  background-image: url("hero-palette.jpg"); /* imagen del creador de paletas */
   background-size:cover;
   background-position: center;
   background-repeat:no-repeat;
