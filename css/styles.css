@@ -960,3 +960,72 @@ footer {
   position: relative;
   z-index: 1;
 }
+
+/* ===== Responsive minimo (sin alterar diseno base) ===== */
+@media (max-width: 1024px) {
+  .hero,
+  .hero__animated-bg {
+    width: 100%;
+  }
+
+  .main {
+    padding: 90px 6%;
+  }
+
+  .toolbar {
+    padding: 0 12px;
+  }
+
+  .toolbar__nav {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .toolbar {
+    gap: 8px;
+  }
+
+  .toolbar__logo {
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+
+  .toolbar__nav {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .toolbar__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .toolbar__format-select {
+    max-width: 82px;
+  }
+
+  .main {
+    padding: 85px 4%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 85vh;
+  }
+
+  .hero__title {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+    padding: 0 12px;
+  }
+
+  .main {
+    padding: 80px 3%;
+  }
+}
