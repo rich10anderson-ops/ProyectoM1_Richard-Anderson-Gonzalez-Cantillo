@@ -43,3 +43,4 @@ themeToggle.addEventListener("click", () => {
 
   themeToggle.textContent = darkMode ? "🌙" : "☀️";
 });
+
