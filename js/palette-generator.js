@@ -3,6 +3,7 @@ const paletteContainer = document.querySelector("#palette");
 const generateBtn = document.getElementById("generateBtn");
 const themeToggle = document.getElementById("themeToggle");
 
+
 /**
  * Genera un color hexadecimal aleatorio
  * @returns {string} Color en formato hexadecimal (#RRGGBB)
@@ -56,3 +57,4 @@ themeToggle.addEventListener("click", () => {
 
   themeToggle.textContent = darkMode ? "🌙" : "☀️";
 });
+
