@@ -12,8 +12,8 @@ body {
   min-height: 150vh;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  padding: 20px;
+  align-items:stretch;
+  padding: 3px;
   grid-template-columns: 200px 200px 200px;
 }
 
@@ -192,6 +192,7 @@ footer {
 
 /* ===== MAIN LAYOUT ===== */
 .main {
+  width: 100%;
   padding: 100px 10%;
   background: linear-gradient(-145deg, #cdea66, #2ae93d, #8f64da, #ff6b6b);
   background-size: 400% 400%;
@@ -506,7 +507,7 @@ footer {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 60px;
+  height: 70px;
   background: rgba(20, 20, 40, 0.75);
   backdrop-filter: blur(12px);
   display: flex;
@@ -936,13 +937,26 @@ footer {
   background-clip: text;
 }
 
-/* En modo claro (day) mantén fondo claro pero fuerza mejor contraste ajustando stops */
-.light-mode .logo-gradient,
-.light-mode .toolbar__nav .toolbar__action-btn,
-.light-mode .toolbar__nav .toolbar__link {
-  background: var(--logo-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: saturate(1.05) contrast(1.05);
+
+
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.hero,
+.main,
+footer {
+  position: relative;
+  z-index: 1;
 }
