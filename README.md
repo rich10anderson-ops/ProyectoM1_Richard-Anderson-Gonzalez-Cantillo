@@ -48,7 +48,7 @@ Agregamos funcionalidades pro:
 ✅ Título neon en púrpura
 ✅ Navbar único
 
-## ✨ Características Principales
+## ✨ Características Principales 
 
 - 🔄 **Generación de paletas** - Crea 6, 8 o 9 colores aleatorios
 - ❤️ **Favoritas** - Guarda paletas en localStorage
@@ -65,7 +65,7 @@ Agregamos funcionalidades pro:
 
 
 # 1. Abre el archivo
-index.html
+index.html (https://rich10anderson-ops.github.io/ProyectoM1_Richard-Anderson-Gonzalez-Cantillo/)
 {Automaticamente se genera un alert informando sobre la creacion de una 🎨paleta de 6 colores}
 # 2. Presiona 🔄 Generar
 # 3. Haz clic en un color para copiar
